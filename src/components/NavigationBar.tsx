@@ -1,11 +1,8 @@
-
 import {Flex} from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
-import { useLocation } from 'react-router';
 import { Button } from '@chakra-ui/react';
 
 const NavigationBar = () => {
-    const location = useLocation();
     const navigate = useNavigate();
 return (
     <Flex justifyContent="space-between" padding="10px" bg="blue.500" color="white">
