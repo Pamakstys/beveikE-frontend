@@ -1,6 +1,3 @@
-import React from 'react';
-import { Provider } from '../components/ui/provider';
-
 
 
 const MainPage = () => {
