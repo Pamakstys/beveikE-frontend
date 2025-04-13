@@ -12,6 +12,7 @@ return (
         <Flex alignItems="center">
             <Button colorScheme="teal" variant="outline" marginRight="10px" onClick={() => navigate('/')} _hover={{ bg: 'pink.300', color: 'white' }} >Main Page</Button>
             <Button colorScheme="teal" variant="outline" onClick={() => navigate('/books')} _hover={{ bg: 'pink.300', color: 'white' }} >Books</Button>
+            <Button colorScheme="teal" variant="outline" onClick={() => navigate('/unregistered-books')} _hover={{ bg: 'pink.300', color: 'white' }} >Unregistered Books</Button>
         </Flex>
     </Flex>
     );

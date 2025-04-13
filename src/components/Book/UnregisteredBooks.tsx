@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
-import {
-  Box,
-  Heading,
-  Spinner,
-  Text,
-  Stack,
-  Button,
-} from "@chakra-ui/react";
+import {Box, Heading, Spinner, Text, Stack, Button} from "@chakra-ui/react";
+import { useNavigate } from "react-router";
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 interface Book {
   id: number;
@@ -14,7 +10,6 @@ interface Book {
   autorius: string;
   reitingas: number;
   kaina: number;
-  likutis: number;
   ilgis: number;
   aukstis: number;
   plotis: number;
@@ -22,6 +17,7 @@ interface Book {
 }
 
 const Book = () => {
+  const navigate = useNavigate();
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -35,12 +31,12 @@ const Book = () => {
   };
   
   useEffect(() => {
-    fetch("http://localhost:5000/api/books/get-books", {
+    fetch(`${API_BASE_URL}/books/get-books`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ status: 4 }) // example: fetch only "neužregistruota"
+      body: JSON.stringify({ status: 4 })
     })
       .then((response) => {
         if (!response.ok) {
@@ -84,14 +80,10 @@ const Book = () => {
             <Text>Author: {book.autorius}</Text>
             <Text>Rating: {book.reitingas}</Text>
             <Text>Price: €{book.kaina.toFixed(2)}</Text>
-            <Text>In stock: {book.likutis} pcs</Text>
             <Text>Dimensions: {book.ilgis} x {book.plotis} x {book.aukstis} cm</Text>
-            <Text>Status ID: {book.statusas}</Text>
-            <Button mt={2} colorScheme="blue">
-              Edit
-            </Button>
-            <Button mt={2} colorScheme="blue">
-              Delete
+            <Text>Status ID: {statusMap[Number(book.statusas)]}</Text>
+            <Button mt={2} colorScheme="blue" bg={"green"} color={"white"} onClick={() => navigate(`/unregistered-books/register?id=${book.id}&type=book`)}>
+              Register Book
             </Button>
           </Box>
         ))}
