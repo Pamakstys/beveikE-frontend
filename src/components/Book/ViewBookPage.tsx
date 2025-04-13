@@ -100,7 +100,7 @@ const ViewBookPage = () => {
         <Text><strong>Dimensions:</strong> {book.ilgis} x {book.plotis} x {book.aukstis} cm</Text>
         <Text><strong>Status:</strong> {statusMap[book.statusas]}</Text>
       </Stack>
-      <Button mt={6} colorScheme="blue" onClick={() => navigate(-1)}>
+      <Button bg={"orange"} color={"white"} mt={6} colorScheme="blue" onClick={() => navigate(-1)}>
         Go Back
       </Button>
     </Box>

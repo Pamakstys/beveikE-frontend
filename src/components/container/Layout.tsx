@@ -9,7 +9,7 @@ import { Outlet } from "react-router";
 // const Layout = ({ children }: LayoutProps) => {
 const Layout = () => {
   return (
-    <Flex direction="column" minHeight="100vh" bg={"white"} color={"black"}>
+    <Flex direction="column" minHeight="100vh" bg={"linear-gradient(-90deg,rgba(0, 98, 255, 1) 0%, rgba(255, 255, 255, 1) 80%);"} color={"black"}>
       <Box as="header">
         <NavigationBar />
       </Box>

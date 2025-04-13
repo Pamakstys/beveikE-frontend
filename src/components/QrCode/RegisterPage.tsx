@@ -77,7 +77,7 @@ const RegisterPage = () => {
   const renderConfirmationDialog = () => (
     <Box p={6}>
       <Heading size="lg" mb={4}>
-        Was the QR Code printed successfully?
+        Ar QR kodas buvo atspausdintas?
       </Heading>
       <Stack direction="row">
         <Button bg={"green"} color={"white"} onClick={() => handleConfirmation(true)}>
