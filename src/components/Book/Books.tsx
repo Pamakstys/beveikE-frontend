@@ -37,7 +37,7 @@ const Books = () => {
   };
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/books/get-books`, {
+    fetch(`${API_BASE_URL}/books/find-books`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -69,7 +69,7 @@ const Books = () => {
     if (bookToDelete) {
       console.log(`Deleting book with ID: ${bookToDelete}`);
       fetch(`${API_BASE_URL}/books/delete`, {
-        method: "POST",
+        method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: bookToDelete }),
       });

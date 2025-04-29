@@ -31,7 +31,7 @@ const Book = () => {
   };
   
   useEffect(() => {
-    fetch(`${API_BASE_URL}/books/get-books`, {
+    fetch(`${API_BASE_URL}/books/find-unregistered-books`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

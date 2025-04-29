@@ -41,7 +41,7 @@ const ViewBookPage = () => {
       return;
     }
 
-    fetch(`${API_BASE_URL}/books/get-book`, {
+    fetch(`${API_BASE_URL}/books/find-book`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

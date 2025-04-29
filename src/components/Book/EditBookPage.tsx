@@ -26,7 +26,7 @@ const EditBookPage = () => {
 
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/books/get-book`, {
+    fetch(`${API_BASE_URL}/books/find-book`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -70,8 +70,8 @@ const EditBookPage = () => {
       statusas: book?.statusas,
     };
 
-    fetch(`${API_BASE_URL}/books/update-book`, {
-        method: "PUT",
+    fetch(`${API_BASE_URL}/books/edit-book`, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
