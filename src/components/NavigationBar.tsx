@@ -1,20 +1,148 @@
-import {Flex} from '@chakra-ui/react';
-import { useNavigate } from 'react-router';
-import { Button } from '@chakra-ui/react';
+import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
+import { useNavigate } from "react-router";
 
 const NavigationBar = () => {
-    const navigate = useNavigate();
-return (
-    <Flex justifyContent="space-between" padding="10px" bg="linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);" color="white">
-       <Flex alignItems="center">
-                <h1 style={{ color: 'white' }}>BeveikE</h1>
-        </Flex>
-        <Flex alignItems="center">
-            <Button colorScheme="teal" variant="outline" marginRight="10px" onClick={() => navigate('/')} _hover={{ bg: 'pink.300', color: 'white' }} >Main Page</Button>
-            <Button colorScheme="teal" variant="outline" onClick={() => navigate('/books')} _hover={{ bg: 'pink.300', color: 'white' }} >Books</Button>
-            <Button colorScheme="teal" variant="outline" onClick={() => navigate('/unregistered-books')} _hover={{ bg: 'pink.300', color: 'white' }} >Unregistered Books</Button>
-        </Flex>
-    </Flex>
-    );
+  const navigate = useNavigate();
+  const role = localStorage.getItem("role");
+  const isLoggedIn = Boolean(localStorage.getItem("id"));
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
+
+  return (
+    <AppBar
+      position="static"
+      sx={{
+        background:
+          "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)",
+        color: "white",
+        padding: "10px",
+      }}
+    >
+      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Box>
+          <Typography variant="h6" component="h1" sx={{ color: "white" }}>
+            BeveikE
+          </Typography>
+        </Box>
+        <Box>
+          {isLoggedIn ? (
+            <>
+              {/* Main Page always shown */}
+              <Button
+                variant="outlined"
+                color="primary"
+                sx={{
+                  mr: 2,
+                  borderColor: "teal",
+                  color: "teal",
+                  "&:hover": {
+                    backgroundColor: "pink",
+                    color: "white",
+                    borderColor: "pink",
+                  },
+                }}
+                onClick={() => navigate("/")}
+              >
+                Main Page
+              </Button>
+
+              {/* Books */}
+              {(role === "client" || role === "worker" || role === "admin") && (
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  sx={{
+                    mr: 2,
+                    borderColor: "teal",
+                    color: "teal",
+                    "&:hover": {
+                      backgroundColor: "pink",
+                      color: "white",
+                      borderColor: "pink",
+                    },
+                  }}
+                  onClick={() => navigate("/books")}
+                >
+                  Books
+                </Button>
+              )}
+
+              {/* Unregistered Books */}
+              {(role === "worker" || role === "admin") && (
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  sx={{
+                    borderColor: "teal",
+                    color: "teal",
+                    "&:hover": {
+                      backgroundColor: "pink",
+                      color: "white",
+                      borderColor: "pink",
+                    },
+                  }}
+                  onClick={() => navigate("/unregistered-books")}
+                >
+                  Unregistered Books
+                </Button>
+              )}
+
+              {/* Admin Panel */}
+              {role === "admin" && (
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  sx={{
+                    ml: 2,
+                    borderColor: "teal",
+                    color: "teal",
+                    "&:hover": {
+                      backgroundColor: "pink",
+                      color: "white",
+                      borderColor: "pink",
+                    },
+                  }}
+                  onClick={() => navigate("/admin-panel")}
+                >
+                  Admin Panel
+                </Button>
+              )}
+
+              {/* Logout */}
+              <Button
+                variant="outlined"
+                color="error"
+                sx={{ ml: 2, borderColor: "red", color: "red" }}
+                onClick={handleLogout}
+              >
+                Logout
+              </Button>
+            </>
+          ) : (
+            <Button
+              variant="outlined"
+              color="primary"
+              sx={{
+                borderColor: "teal",
+                color: "teal",
+                "&:hover": {
+                  backgroundColor: "pink",
+                  color: "white",
+                  borderColor: "pink",
+                },
+              }}
+              onClick={() => navigate("/login")}
+            >
+              Login
+            </Button>
+          )}
+        </Box>
+      </Toolbar>
+    </AppBar>
+  );
 };
+
 export default NavigationBar;

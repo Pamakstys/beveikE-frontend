@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
-import { Box, Heading, Button, Spinner, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Typography,
+  Button,
+  CircularProgress,
+  Stack,
+  Paper,
+} from "@mui/material";
 import { useNavigate } from "react-router";
 import DeleteModal from "./DeleteModal";
 
@@ -26,14 +33,12 @@ const Books = () => {
   const [bookToDelete, setBookToDelete] = useState<number | null>(null);
   const [refresh, setRefresh] = useState(false);
 
-
-
   const statusMap: Record<number, string> = {
     1: "laisva",
     2: "užsakyta",
     3: "grąžinta",
     4: "neužregistruota",
-    5: "užregistruota"
+    5: "užregistruota",
   };
 
   useEffect(() => {
@@ -42,7 +47,7 @@ const Books = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ status: 1 })
+      body: JSON.stringify({ status: 1 }),
     })
       .then((response) => {
         if (!response.ok) {
@@ -62,7 +67,7 @@ const Books = () => {
 
   const handleDeleteClick = (bookId: number) => {
     setBookToDelete(bookId);
-    setIsDeleteModalOpen(true)
+    setIsDeleteModalOpen(true);
   };
 
   const handleConfirmDelete = () => {
@@ -76,7 +81,7 @@ const Books = () => {
     }
     setIsDeleteModalOpen(false);
     setBookToDelete(null);
-    setRefresh(prev => !prev);
+    setRefresh((prev) => !prev);
   };
 
   const handleCloseModal = () => {
@@ -85,8 +90,8 @@ const Books = () => {
 
   if (loading) {
     return (
-      <Box p={4}>
-        <Spinner color="blue.500" />
+      <Box p={4} display="flex" justifyContent="center">
+        <CircularProgress color="primary" />
       </Box>
     );
   }
@@ -94,33 +99,56 @@ const Books = () => {
   if (error) {
     return (
       <Box p={4}>
-        <Text color="red.500">{error}</Text>
+        <Typography color="error">{error}</Typography>
       </Box>
     );
   }
 
   return (
     <Box p={4}>
-      <Heading mb={4}>Book List 📚</Heading>
-      <Stack>
+      <Typography variant="h4" mb={4}>
+        Book List 📚
+      </Typography>
+      <Stack spacing={2}>
         {books.map((book) => (
-          <Box key={book.id_Knyga} p={4} borderWidth="1px" borderRadius="md">
-            <Text fontWeight="bold">{book.pavadinimas}</Text>
-            <Text>Author: {book.autorius}</Text>
-            <Text>Rating: {book.reitingas}</Text>
-            <Text>Price: €{book.kaina.toFixed(2)}</Text>
-            <Text>Dimensions: {book.ilgis} x {book.plotis} x {book.aukštis} cm</Text>
-            <Text>Status: {statusMap[Number(book.statusas)]}</Text>
-            <Button mt={2} colorScheme="red" bg={"red"} color={"white"} onClick={() => handleDeleteClick(book.id_Knyga)}>
-              Delete
-            </Button>
-            <Button mt={2} bg={"blue"} color={"white"} colorScheme="blue" onClick={() => navigate(`/books/edit?id=${book.id_Knyga}`)}>
-              Edit
-            </Button>
-            <Button mt={2} bg={"green"} color={"white"} colorScheme="blue" onClick={() => navigate(`/books/view?id=${book.id_Knyga}`)}>
-              View
-            </Button>
-          </Box>
+          <Paper key={book.id_Knyga} sx={{ p: 2 }} elevation={3}>
+            <Typography variant="h6" fontWeight="bold">
+              {book.pavadinimas}
+            </Typography>
+            <Typography>Author: {book.autorius}</Typography>
+            <Typography>Rating: {book.reitingas}</Typography>
+            <Typography>Price: €{book.kaina.toFixed(2)}</Typography>
+            <Typography>
+              Dimensions: {book.ilgis} x {book.plotis} x {book.aukštis} cm
+            </Typography>
+            <Typography>Status: {statusMap[Number(book.statusas)]}</Typography>
+
+            <Stack direction="row" spacing={1} mt={2}>
+              <Button
+                variant="contained"
+                color="error"
+                onClick={() => handleDeleteClick(book.id_Knyga)}
+              >
+                Delete
+              </Button>
+
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => navigate(`/books/edit?id=${book.id_Knyga}`)}
+              >
+                Edit
+              </Button>
+
+              <Button
+                variant="contained"
+                color="success"
+                onClick={() => navigate(`/books/view?id=${book.id_Knyga}`)}
+              >
+                View
+              </Button>
+            </Stack>
+          </Paper>
         ))}
       </Stack>
 

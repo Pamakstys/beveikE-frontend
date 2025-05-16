@@ -1,4 +1,11 @@
-import { Dialog, Button } from "@chakra-ui/react";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  Typography,
+} from "@mui/material";
 
 interface DeleteModalProps {
   isOpen: boolean;
@@ -8,25 +15,20 @@ interface DeleteModalProps {
 
 const DeleteModal = ({ isOpen, onClose, onConfirm }: DeleteModalProps) => {
   return (
-    <Dialog.Root open={isOpen} onClose={onClose}>
-      <Dialog.Backdrop />
-      <Dialog.Positioner>
-        <Dialog.Content style={{ background:"white"}}>
-          <Dialog.Header>
-            <Dialog.Title>Confirm Deletion</Dialog.Title>
-          </Dialog.Header>
-
-          <Dialog.Body>
-            Are you sure you want to delete this book?
-          </Dialog.Body>
-
-          <Dialog.Footer display="flex" justifyContent="flex-end" gap="1rem">
-            <Button onClick={onClose} bg={"blue"} color={"white"}>Cancel</Button>
-            <Button colorScheme="red" onClick={onConfirm} bg={"red"} color={"white"}>Delete</Button>
-          </Dialog.Footer>
-        </Dialog.Content>
-      </Dialog.Positioner>
-    </Dialog.Root>
+    <Dialog open={isOpen} onClose={onClose}>
+      <DialogTitle>Confirm Deletion</DialogTitle>
+      <DialogContent>
+        <Typography>Are you sure you want to delete this book?</Typography>
+      </DialogContent>
+      <DialogActions sx={{ px: 3, pb: 2 }}>
+        <Button onClick={onClose} variant="contained" color="primary">
+          Cancel
+        </Button>
+        <Button onClick={onConfirm} variant="contained" color="error">
+          Delete
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 

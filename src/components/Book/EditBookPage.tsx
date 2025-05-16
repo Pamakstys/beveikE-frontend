@@ -1,5 +1,17 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
+  import { SelectChangeEvent } from "@mui/material/Select";
+import {
+  Box,
+  Typography,
+  TextField,
+  Select,
+  MenuItem,
+  Button,
+  FormControl,
+  InputLabel,
+  Alert,
+} from "@mui/material";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -15,6 +27,14 @@ interface Book {
   statusas: number;
 }
 
+const statusOptions = [
+  { value: 1, label: "Laisva" },
+  { value: 2, label: "Užsakyta" },
+  { value: 3, label: "Grąžinta" },
+  { value: 4, label: "Neužregistruota" },
+  { value: 5, label: "Užregistruota" },
+];
+
 const EditBookPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -24,14 +44,13 @@ const EditBookPage = () => {
   const [book, setBook] = useState<Book | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-
   useEffect(() => {
     fetch(`${API_BASE_URL}/books/find-book`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id: id }),
+      body: JSON.stringify({ id }),
     })
       .then(async (res) => {
         if (!res.ok) {
@@ -40,136 +59,132 @@ const EditBookPage = () => {
         }
         return res.json();
       })
-      .then((data) => {
-        setBook(data);
-      })
-      .catch((err) => {
-        setError(err.message);
-      });
+      .then((data) => setBook(data))
+      .catch((err) => setError(err.message));
   }, [id]);
-  
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
 
-    let updatedValue: number = name === "statusas" ? parseInt(value) : parseFloat(value);
+
+  const handleChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      | SelectChangeEvent<number>
+  ) => {
+    const name = e.target.name!;
+    let value: any = e.target.value;
+
+    // For SelectChangeEvent, value might come as string, so parse it for numeric fields
+    if (name === "statusas" || name === "reitingas" || name === "kaina") {
+      value = Number(value);
+    }
 
     if (name === "reitingas") {
-        if (updatedValue > 5) updatedValue = 5;
-        if (updatedValue < 0) updatedValue = 0;
-      }
+      if (value > 5) value = 5;
+      if (value < 0) value = 0;
+    }
 
-    setBook(prev => prev ? { ...prev, [name]: name === "statusas" ? parseInt(value) : parseFloat(value) } : prev);
+    setBook((prev) => (prev ? { ...prev, [name]: value } : prev));
   };
 
   const handleSubmit = () => {
+    if (!book) return;
     const payload = {
-      id: book?.id_Knyga,
-      reitingas: book?.reitingas,
-      kaina: book?.kaina,
-      statusas: book?.statusas,
+      id: book.id_Knyga,
+      reitingas: book.reitingas,
+      kaina: book.kaina,
+      statusas: book.statusas,
     };
 
     fetch(`${API_BASE_URL}/books/edit-book`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    })
+      .then(async (res) => {
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(errorData.message || "Įvyko klaida");
+        }
+        navigate("/books");
       })
-        .then(async (res) => {
-          if (!res.ok) {
-            const errorData = await res.json();
-            throw new Error(errorData.message || "Įvyko klaida");
-          }
-          navigate("/books");
-        })
-        .catch((err) => {
-          setError(err.message);
-        });
-    }
+      .catch((err) => setError(err.message));
+  };
 
-  if (!book) return <div style={{ padding: "1rem" }}>Įkeliama...</div>;
+  if (!book) return <Typography p={2}>Įkeliama...</Typography>;
 
   return (
-    <div style={{ maxWidth: "600px", margin: "0 auto", padding: "1rem" }}>
-      <h2 style={{ marginBottom: "1rem" }}>Redaguoti knygą</h2>
+    <Box maxWidth={600} mx="auto" p={2}>
+      <Typography variant="h4" mb={3}>
+        Redaguoti knygą
+      </Typography>
 
       {error && (
-        <div style={{ color: "red", marginBottom: "1rem" }}>
+        <Alert severity="error" sx={{ mb: 3 }}>
           {error}
-        </div>
+        </Alert>
       )}
 
-      {["pavadinimas", "autorius", "ilgis", "aukštis", "plotis"].map(field => (
-        <div key={field} style={{ marginBottom: "1rem" }}>
-          <label>{field.charAt(0).toUpperCase() + field.slice(1)}:</label>
-          <input
-            type="text"
-            name={field}
+      {["pavadinimas", "autorius", "ilgis", "aukštis", "plotis"].map(
+        (field) => (
+          <TextField
+            key={field}
+            label={field.charAt(0).toUpperCase() + field.slice(1)}
             value={(book as any)[field]}
+            fullWidth
+            margin="normal"
             disabled
-            style={{ width: "100%", padding: "8px", background: "#f5f5f5" }}
+            InputProps={{ sx: { bgcolor: "#f5f5f5" } }}
           />
-        </div>
-      ))}
+        )
+      )}
 
-      <div style={{ marginBottom: "1rem" }}>
-        <label>Reitingas:</label>
-        <input
-          type="number"
-          name="reitingas"
-          value={book.reitingas}
-          onChange={handleChange}
-          step="0.1"
-          max={10}
-          max-value={10}
-          style={{ width: "100%", padding: "8px", background:"white" }}
-        />
-      </div>
+      <TextField
+        label="Reitingas"
+        name="reitingas"
+        type="number"
+        value={book.reitingas}
+        onChange={handleChange}
+        inputProps={{ step: 0.1, min: 0, max: 5 }}
+        fullWidth
+        margin="normal"
+      />
 
-      <div style={{ marginBottom: "1rem" }}>
-        <label>Kaina:</label>
-        <input
-          type="number"
-          name="kaina"
-          value={book.kaina}
-          onChange={handleChange}
-          step="0.01"
-          style={{ width: "100%", padding: "8px", background:"white" }}
-        />
-      </div>
+      <TextField
+        label="Kaina"
+        name="kaina"
+        type="number"
+        value={book.kaina}
+        onChange={handleChange}
+        inputProps={{ step: 0.01, min: 0 }}
+        fullWidth
+        margin="normal"
+      />
 
-      <div style={{ marginBottom: "1rem" }}>
-        <label>Statusas:</label>
-        <select
+      <FormControl fullWidth margin="normal">
+        <InputLabel>Statusas</InputLabel>
+        <Select<number>
+          label="Statusas"
           name="statusas"
           value={book.statusas}
           onChange={handleChange}
-          style={{ width: "100%", padding: "8px", background:"white" }}
         >
-          <option value={1}>Laisva</option>
-          <option value={2}>Užsakyta</option>
-          <option value={3}>Grąžinta</option>
-          <option value={4}>Neužregistruota</option>
-          <option value={5}>Užregistruota</option>
-        </select>
-      </div>
+          {statusOptions.map((opt) => (
+            <MenuItem key={opt.value} value={opt.value}>
+              {opt.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
 
-      <button
+      <Button
+        variant="contained"
+        color="primary"
         onClick={handleSubmit}
-        style={{
-          backgroundColor: "#3182ce",
-          color: "#fff",
-          padding: "10px 20px",
-          border: "none",
-          borderRadius: "4px",
-          cursor: "pointer"
-        }}
+        sx={{ mt: 3 }}
       >
         Išsaugoti
-      </button>
-    </div>
+      </Button>
+    </Box>
   );
 };
 
