@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { Box, Heading, Spinner, Text, Stack, Button } from "@chakra-ui/react";
+import {
+  Box,
+  Typography,
+  CircularProgress,
+  Stack,
+  Button,
+} from "@mui/material";
 import { useNavigate, useLocation } from "react-router";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -66,41 +72,64 @@ const ViewBookPage = () => {
 
   if (loading) {
     return (
-      <Box p={4}>
-        <Spinner color="blue.500" />
+      <Box p={4} display="flex" justifyContent="center">
+        <CircularProgress color="primary" />
       </Box>
     );
   }
 
   if (error) {
     return (
-      <Box p={4}>
-        <Text color="red.500">{error}</Text>
-        <Button onClick={() => navigate(-1)}>Go Back</Button>
+      <Box p={4} textAlign="center">
+        <Typography color="error" mb={2}>
+          {error}
+        </Typography>
+        <Button variant="contained" onClick={() => navigate(-1)}>
+          Go Back
+        </Button>
       </Box>
     );
   }
 
   if (!book) {
     return (
-      <Box p={4}>
-        <Text>Book not found.</Text>
-        <Button onClick={() => navigate(-1)}>Go Back</Button>
+      <Box p={4} textAlign="center">
+        <Typography>Book not found.</Typography>
+        <Button variant="contained" onClick={() => navigate(-1)} sx={{ mt: 2 }}>
+          Go Back
+        </Button>
       </Box>
     );
   }
 
   return (
-    <Box p={6}>
-      <Heading mb={4}>{book.pavadinimas}</Heading>
-      <Stack>
-        <Text><strong>Author:</strong> {book.autorius}</Text>
-        <Text><strong>Rating:</strong> {book.reitingas}</Text>
-        <Text><strong>Price:</strong> €{book.kaina.toFixed(2)}</Text>
-        <Text><strong>Dimensions:</strong> {book.ilgis} x {book.plotis} x {book.aukštis} cm</Text>
-        <Text><strong>Status:</strong> {statusMap[book.statusas]}</Text>
+    <Box p={6} maxWidth="600px" mx="auto">
+      <Typography variant="h4" gutterBottom>
+        {book.pavadinimas}
+      </Typography>
+      <Stack spacing={1}>
+        <Typography>
+          <strong>Author:</strong> {book.autorius}
+        </Typography>
+        <Typography>
+          <strong>Rating:</strong> {book.reitingas}
+        </Typography>
+        <Typography>
+          <strong>Price:</strong> €{book.kaina.toFixed(2)}
+        </Typography>
+        <Typography>
+          <strong>Dimensions:</strong> {book.ilgis} x {book.plotis} x {book.aukštis} cm
+        </Typography>
+        <Typography>
+          <strong>Status:</strong> {statusMap[book.statusas]}
+        </Typography>
       </Stack>
-      <Button bg={"orange"} color={"white"} mt={6} colorScheme="blue" onClick={() => navigate(-1)}>
+      <Button
+        variant="contained"
+        color="warning"
+        sx={{ mt: 6 }}
+        onClick={() => navigate(-1)}
+      >
         Go Back
       </Button>
     </Box>

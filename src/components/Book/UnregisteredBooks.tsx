@@ -1,17 +1,24 @@
 import { useEffect, useState } from "react";
-import {Box, Heading, Spinner, Text, Stack, Button} from "@chakra-ui/react";
+import {
+  Box,
+  Typography,
+  CircularProgress,
+  Stack,
+  Button,
+  Paper,
+} from "@mui/material";
 import { useNavigate } from "react-router";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 interface Book {
-  id: number;
+  id_Knyga: number;
   pavadinimas: string;
   autorius: string;
   reitingas: number;
   kaina: number;
   ilgis: number;
-  aukstis: number;
+  aukštis: number;
   plotis: number;
   statusas: string;
 }
@@ -27,16 +34,16 @@ const Book = () => {
     2: "užsakyta",
     3: "grąžinta",
     4: "neužregistruota",
-    5: "užregistruota"
+    5: "užregistruota",
   };
-  
+
   useEffect(() => {
     fetch(`${API_BASE_URL}/books/find-unregistered-books`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ status: 4 })
+      body: JSON.stringify({ status: 4 }),
     })
       .then((response) => {
         if (!response.ok) {
@@ -53,12 +60,11 @@ const Book = () => {
         setLoading(false);
       });
   }, []);
-  
 
   if (loading) {
     return (
-      <Box p={4}>
-        <Spinner color="blue.500" />
+      <Box p={4} display="flex" justifyContent="center">
+        <CircularProgress color="primary" />
       </Box>
     );
   }
@@ -66,26 +72,44 @@ const Book = () => {
   if (error) {
     return (
       <Box p={4}>
+        <Typography color="error">{error}</Typography>
       </Box>
     );
   }
 
   return (
     <Box p={4}>
-      <Heading mb={4}>Book List 📚</Heading>
-      <Stack>
+      <Typography variant="h4" gutterBottom>
+        Book List 📚
+      </Typography>
+      <Stack spacing={2}>
         {books.map((book) => (
-          <Box key={book.id} p={4} borderWidth="1px" borderRadius="md">
-            <Text fontWeight="bold">{book.pavadinimas}</Text>
-            <Text>Author: {book.autorius}</Text>
-            <Text>Rating: {book.reitingas}</Text>
-            <Text>Price: €{book.kaina.toFixed(2)}</Text>
-            <Text>Dimensions: {book.ilgis} x {book.plotis} x {book.aukstis} cm</Text>
-            <Text>Status ID: {statusMap[Number(book.statusas)]}</Text>
-            <Button mt={2} colorScheme="blue" bg={"green"} color={"white"} onClick={() => navigate(`/unregistered-books/register?id=${book.id}&type=book`)}>
+          <Paper key={book.id_Knyga} variant="outlined" sx={{ p: 2, borderRadius: 2 }}>
+            <Typography variant="h6" fontWeight="bold">
+              {book.pavadinimas}
+            </Typography>
+            <Typography>Author: {book.autorius}</Typography>
+            <Typography>Rating: {book.reitingas}</Typography>
+            <Typography>
+              Price: €{book.kaina.toFixed(2)}
+            </Typography>
+            <Typography>
+              Dimensions: {book.ilgis} x {book.plotis} x {book.aukštis} cm
+            </Typography>
+            <Typography>Status: {statusMap[Number(book.statusas)]}</Typography>
+            <Button
+              variant="contained"
+              color="success"
+              sx={{ mt: 2 }}
+              onClick={() =>
+                navigate(
+                  `/unregistered-books/register?id=${book.id_Knyga}&type=book`
+                )
+              }
+            >
               Register Book
             </Button>
-          </Box>
+          </Paper>
         ))}
       </Stack>
     </Box>

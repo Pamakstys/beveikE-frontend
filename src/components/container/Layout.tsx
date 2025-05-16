@@ -1,24 +1,28 @@
-import { Flex, Box } from "@chakra-ui/react";
+import { Box, Container } from "@mui/material";
 import NavigationBar from "../NavigationBar";
 import { Outlet } from "react-router";
 
-// interface LayoutProps {
-//   children: React.ReactNode;
-// }
-
-// const Layout = ({ children }: LayoutProps) => {
 const Layout = () => {
   return (
-    <Flex direction="column" minHeight="100vh" bg={"linear-gradient(-90deg,rgba(0, 98, 255, 1) 0%, rgba(255, 255, 255, 1) 80%);"} color={"black"}>
-      <Box as="header">
+    <Box
+      display="flex"
+      flexDirection="column"
+      minHeight="100vh"
+      sx={{
+        background: "linear-gradient(-90deg, rgba(0, 98, 255, 1) 0%, rgba(255, 255, 255, 1) 80%)",
+        color: "black",
+      }}
+    >
+      <Box component="header">
         <NavigationBar />
       </Box>
 
-      <Box as="main" flex="1" padding={4}>
-        {/* {children} */}
-        <Outlet />
+      <Box component="main" flex="1">
+        <Container maxWidth="lg" disableGutters>
+          <Outlet />
+        </Container>
       </Box>
-    </Flex>
+    </Box>
   );
 };
 
