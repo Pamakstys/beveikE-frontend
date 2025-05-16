@@ -4,13 +4,13 @@ import { useLocation, useNavigate } from "react-router";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 interface Book {
-  id: number;
+  id_Knyga: number;
   pavadinimas: string;
   autorius: string;
   reitingas: number;
   kaina: number;
   ilgis: number;
-  aukstis: number;
+  aukštis: number;
   plotis: number;
   statusas: number;
 }
@@ -64,7 +64,7 @@ const EditBookPage = () => {
 
   const handleSubmit = () => {
     const payload = {
-      id: book?.id,
+      id: book?.id_Knyga,
       reitingas: book?.reitingas,
       kaina: book?.kaina,
       statusas: book?.statusas,
@@ -101,7 +101,7 @@ const EditBookPage = () => {
         </div>
       )}
 
-      {["pavadinimas", "autorius", "ilgis", "aukstis", "plotis"].map(field => (
+      {["pavadinimas", "autorius", "ilgis", "aukštis", "plotis"].map(field => (
         <div key={field} style={{ marginBottom: "1rem" }}>
           <label>{field.charAt(0).toUpperCase() + field.slice(1)}:</label>
           <input

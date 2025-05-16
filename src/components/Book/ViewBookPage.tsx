@@ -5,13 +5,13 @@ import { useNavigate, useLocation } from "react-router";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 interface Book {
-  id: number;
+  id_Knyga: number;
   pavadinimas: string;
   autorius: string;
   reitingas: number;
   kaina: number;
   ilgis: number;
-  aukstis: number;
+  aukštis: number;
   plotis: number;
   statusas: number;
 }
@@ -97,7 +97,7 @@ const ViewBookPage = () => {
         <Text><strong>Author:</strong> {book.autorius}</Text>
         <Text><strong>Rating:</strong> {book.reitingas}</Text>
         <Text><strong>Price:</strong> €{book.kaina.toFixed(2)}</Text>
-        <Text><strong>Dimensions:</strong> {book.ilgis} x {book.plotis} x {book.aukstis} cm</Text>
+        <Text><strong>Dimensions:</strong> {book.ilgis} x {book.plotis} x {book.aukštis} cm</Text>
         <Text><strong>Status:</strong> {statusMap[book.statusas]}</Text>
       </Stack>
       <Button bg={"orange"} color={"white"} mt={6} colorScheme="blue" onClick={() => navigate(-1)}>

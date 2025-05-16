@@ -6,13 +6,13 @@ import DeleteModal from "./DeleteModal";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 interface Book {
-  id: number;
+  id_Knyga: number;
   pavadinimas: string;
   autorius: string;
   reitingas: number;
   kaina: number;
   ilgis: number;
-  aukstis: number;
+  aukštis: number;
   plotis: number;
   statusas: string;
 }
@@ -104,20 +104,20 @@ const Books = () => {
       <Heading mb={4}>Book List 📚</Heading>
       <Stack>
         {books.map((book) => (
-          <Box key={book.id} p={4} borderWidth="1px" borderRadius="md">
+          <Box key={book.id_Knyga} p={4} borderWidth="1px" borderRadius="md">
             <Text fontWeight="bold">{book.pavadinimas}</Text>
             <Text>Author: {book.autorius}</Text>
             <Text>Rating: {book.reitingas}</Text>
             <Text>Price: €{book.kaina.toFixed(2)}</Text>
-            <Text>Dimensions: {book.ilgis} x {book.plotis} x {book.aukstis} cm</Text>
+            <Text>Dimensions: {book.ilgis} x {book.plotis} x {book.aukštis} cm</Text>
             <Text>Status: {statusMap[Number(book.statusas)]}</Text>
-            <Button mt={2} colorScheme="red" bg={"red"} color={"white"} onClick={() => handleDeleteClick(book.id)}>
+            <Button mt={2} colorScheme="red" bg={"red"} color={"white"} onClick={() => handleDeleteClick(book.id_Knyga)}>
               Delete
             </Button>
-            <Button mt={2} bg={"blue"} color={"white"} colorScheme="blue" onClick={() => navigate(`/books/edit?id=${book.id}`)}>
+            <Button mt={2} bg={"blue"} color={"white"} colorScheme="blue" onClick={() => navigate(`/books/edit?id=${book.id_Knyga}`)}>
               Edit
             </Button>
-            <Button mt={2} bg={"green"} color={"white"} colorScheme="blue" onClick={() => navigate(`/books/view?id=${book.id}`)}>
+            <Button mt={2} bg={"green"} color={"white"} colorScheme="blue" onClick={() => navigate(`/books/view?id=${book.id_Knyga}`)}>
               View
             </Button>
           </Box>
