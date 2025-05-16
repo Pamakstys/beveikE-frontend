@@ -7,9 +7,10 @@ import Books from "./components/Book/Books";
 import ViewBookPage from './components/Book/ViewBookPage';
 import EditBookPage from './components/Book/EditBookPage';
 import UnregisteredBooks from "./components/Book/UnregisteredBooks";
-import RegisterPage from "./components/QrCode/RegisterPage";
+import QrRegisterPage from "./components/QrCode/QrRegisterPage";
 import LoginPage from "./pages/LoginPage";
-
+import RegisterPage from "./pages/RegisterPage";
+import AddRegisteredBook from './components/QrCode/AddRegisteredBook';
 function App() {
 
   return (
@@ -33,9 +34,11 @@ function App() {
         <Route path="/books/view" element={<ViewBookPage/>}/>
         <Route path="/books/edit" element={<EditBookPage/>}/>
         <Route path="/unregistered-books" element={<UnregisteredBooks/>} />
-        <Route path="/unregistered-books/register" element={<RegisterPage/>} />
+        <Route path="/unregistered-books/register" element={<QrRegisterPage/>} />
+        <Route path="/add-to-bookcase" element={<AddRegisteredBook/>} />
       </Route>
       <Route path="/login" element={<LoginPage/>}/>
+      <Route path="/register" element={<RegisterPage/>}/>
     </Routes>
       
     </BrowserRouter>

@@ -16,7 +16,7 @@ const NavigationBar = () => {
       position="static"
       sx={{
         background:
-          "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)",
+          "linear-gradient(90deg, rgb(53, 50, 98) 0%, rgb(201, 201, 246) 35%, rgb(251, 241, 241) 100%)",
         color: "white",
         padding: "10px",
       }}
@@ -72,7 +72,24 @@ const NavigationBar = () => {
 
               {/* Unregistered Books */}
               {(role === "worker" || role === "admin") && (
-                <Button
+                <>
+                  <Button style={{ marginRight: "10px" }}
+                    variant="outlined"
+                    color="primary"
+                    sx={{
+                      borderColor: "teal",
+                      color: "teal",
+                      "&:hover": {
+                        backgroundColor: "pink",
+                        color: "white",
+                        borderColor: "pink",
+                      },
+                    }}
+                    onClick={() => navigate("/unregistered-books")}
+                  >
+                    Unregistered Books
+                  </Button>
+                  <Button
                   variant="outlined"
                   color="primary"
                   sx={{
@@ -84,10 +101,11 @@ const NavigationBar = () => {
                       borderColor: "pink",
                     },
                   }}
-                  onClick={() => navigate("/unregistered-books")}
+                  onClick={() => navigate("/add-to-bookcase")}
                 >
-                  Unregistered Books
+                  Add Book to Bookcase
                 </Button>
+                </>
               )}
 
               {/* Admin Panel */}
