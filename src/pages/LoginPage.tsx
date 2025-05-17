@@ -82,6 +82,18 @@ export default function Login() {
             <Button type="submit" variant="contained" fullWidth>
               Login
             </Button>
+            <Typography textAlign="center">
+              Dont have an account?{" "}
+              <Button
+                variant="text"
+                color="primary"
+                onClick={() => {
+                  window.location.href = "/register";
+                }}
+              >
+                Register
+              </Button>
+            </Typography>
           </Stack>
         </Box>
       </Paper>
