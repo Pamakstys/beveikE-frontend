@@ -69,7 +69,26 @@ const NavigationBar = () => {
                   Books
                 </Button>
               )}
-
+              {/* Favourites */}
+              {(role === "client" || role === "worker" || role === "admin") && (
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  sx={{
+                    mr: 2,
+                    borderColor: "teal",
+                    color: "teal",
+                    "&:hover": {
+                      backgroundColor: "pink",
+                      color: "white",
+                      borderColor: "pink",
+                    },
+                  }}
+                  onClick={() => navigate("/favourites")}
+                >
+                  Favourite Books
+                </Button>
+              )}
               {/* Unregistered Books */}
               {(role === "worker" || role === "admin") && (
                 <>

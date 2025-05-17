@@ -11,6 +11,8 @@ import QrRegisterPage from "./components/QrCode/QrRegisterPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import AddRegisteredBook from './components/QrCode/AddRegisteredBook';
+import FavouriteBooks from "./components/Book/FavouriteBooks";
+
 function App() {
 
   return (
@@ -36,6 +38,8 @@ function App() {
         <Route path="/unregistered-books" element={<UnregisteredBooks/>} />
         <Route path="/unregistered-books/register" element={<QrRegisterPage/>} />
         <Route path="/add-to-bookcase" element={<AddRegisteredBook/>} />
+        <Route path="/unregistered-books/register" element={<RegisterPage/>} />
+        <Route path="/favourites" element={<FavouriteBooks />} />
       </Route>
       <Route path="/login" element={<LoginPage/>}/>
       <Route path="/register" element={<RegisterPage/>}/>

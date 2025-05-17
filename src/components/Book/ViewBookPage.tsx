@@ -5,6 +5,7 @@ import {
   CircularProgress,
   Stack,
   Button,
+  TextareaAutosize,
 } from "@mui/material";
 import { useNavigate, useLocation } from "react-router";
 
@@ -22,6 +23,11 @@ interface Book {
   statusas: number;
 }
 
+interface BookComment {
+  tekstas: string;
+  vartotojas: string;
+}
+
 const ViewBookPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -31,6 +37,8 @@ const ViewBookPage = () => {
   const [book, setBook] = useState<Book | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [comments, setComments] = useState<BookComment[]>([]);
+  const [newComment, setNewComment] = useState("");
 
   const statusMap: Record<number, string> = {
     1: "laisva",
@@ -46,7 +54,7 @@ const ViewBookPage = () => {
       setLoading(false);
       return;
     }
-
+    fetchComments(Number(id));
     fetch(`${API_BASE_URL}/books/find-book`, {
       method: "POST",
       headers: {
@@ -69,6 +77,34 @@ const ViewBookPage = () => {
         setLoading(false);
       });
   }, [id]);
+
+  const fetchComments = (bookId: number) => {
+    fetch(`${API_BASE_URL}/books/${bookId}/gautiKomentarus`)
+      .then((res) => res.json())
+      .then(setComments)
+      .catch(console.error);
+  };
+
+  const handleAddComment = () => {
+    if (!book || !newComment.trim()) return;
+    const userId = localStorage.getItem("id");
+    fetch(`${API_BASE_URL}/books/${book.id_Knyga}/PridetiKomentara`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ tekstas: newComment, userId: userId }),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to submit comment");
+        return res.json();
+      })
+      .then(() => {
+        setNewComment("");
+        fetchComments(book.id_Knyga);
+      })
+      .catch(console.error);
+  };
 
   if (loading) {
     return (
@@ -132,6 +168,34 @@ const ViewBookPage = () => {
       >
         Go Back
       </Button>
+ <Box mt={6}>
+        <Typography variant="h6">Komentarai</Typography>
+        <TextareaAutosize
+          minRows={3}
+          placeholder="Parašyk komentarą..."
+          style={{ width: "100%", marginTop: "1rem", padding: "10px", fontSize: "1rem" }}
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+        />
+        <Button
+          variant="contained"
+          sx={{ mt: 1 }}
+          onClick={handleAddComment}
+        >
+          Komentuoti
+        </Button>
+
+        <Box mt={3}>
+          {comments.map((c, idx) => (
+            <Box key={idx} mb={2} p={2} border="1px solid #ccc" borderRadius="8px">
+              <Typography>{c.tekstas}</Typography>
+              <Typography variant="caption" color="text.secondary">
+                {c.vartotojas}
+              </Typography>
+            </Box>
+          ))}
+        </Box>
+      </Box>
     </Box>
   );
 };
