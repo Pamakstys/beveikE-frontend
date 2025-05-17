@@ -70,7 +70,7 @@ const NavigationBar = () => {
                 </Button>
               )}
               {/* Favourites */}
-              {(role === "client" || role === "worker" || role === "admin") && (
+              {(role === "client") && (
                 <Button
                   variant="outlined"
                   color="primary"
