@@ -32,6 +32,7 @@ const Books = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [bookToDelete, setBookToDelete] = useState<number | null>(null);
   const [refresh, setRefresh] = useState(false);
+  const [favouriteBookIds, setFavouriteBookIds] = useState<number[]>([]);
 
   const statusMap: Record<number, string> = {
     1: "laisva",
@@ -65,6 +66,16 @@ const Books = () => {
       });
   }, [refresh]);
 
+    useEffect(() => {
+      const userId = localStorage.getItem("id");
+      if (!userId) return;
+
+      fetch(`${API_BASE_URL}/books/favourites/${userId}`)
+        .then((res) => res.json())
+        .then((data: number[]) => setFavouriteBookIds(data))
+        .catch((err) => console.error("Nepavyko gauti mėgstamiausių knygų", err));
+    }, [refresh]);
+
   const handleDeleteClick = (bookId: number) => {
     setBookToDelete(bookId);
     setIsDeleteModalOpen(true);
@@ -82,6 +93,33 @@ const Books = () => {
     setIsDeleteModalOpen(false);
     setBookToDelete(null);
     setRefresh((prev) => !prev);
+  };
+  const handleAddFavourite = (bookId: number) => {
+    const userId = localStorage.getItem("id");
+    if (favouriteBookIds.includes(bookId)) {
+      alert("Ši knyga jau yra Jūsų mėgstamiausių knygų sąraše");
+      return;
+  }
+    fetch(`${API_BASE_URL}/books/add-favourite`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        BookId: bookId,
+        UserId: Number(userId),
+      }),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Nepavyko pridėti mėgstamos knygos");
+        favouriteBookIds.push(bookId);
+        setFavouriteBookIds(favouriteBookIds);
+        setRefresh((prev) => !prev);
+        return res.text();
+      })
+      .then(() => alert("Knyga pridėta prie mėgstamiausių!"))
+      .catch((err) => {
+        console.error(err);
+        alert("Įvyko klaida pridedant mėgstamą knygą");
+      });
   };
 
   const handleCloseModal = () => {
@@ -113,7 +151,8 @@ const Books = () => {
         {books.map((book) => (
           <Paper key={book.id_Knyga} sx={{ p: 2 }} elevation={3}>
             <Typography variant="h6" fontWeight="bold">
-              {book.pavadinimas}
+                {book.pavadinimas}{" "}
+                {favouriteBookIds.includes(book.id_Knyga) && "⭐"}
             </Typography>
             <Typography>Author: {book.autorius}</Typography>
             <Typography>Rating: {book.reitingas}</Typography>
@@ -147,6 +186,15 @@ const Books = () => {
               >
                 View
               </Button>
+              {!favouriteBookIds.includes(book.id_Knyga) && (
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={() => handleAddFavourite(book.id_Knyga)}
+                >
+                  Favourite
+                </Button>
+              )}
             </Stack>
           </Paper>
         ))}

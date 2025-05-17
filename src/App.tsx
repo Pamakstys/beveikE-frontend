@@ -9,6 +9,7 @@ import EditBookPage from './components/Book/EditBookPage';
 import UnregisteredBooks from "./components/Book/UnregisteredBooks";
 import RegisterPage from "./components/QrCode/RegisterPage";
 import LoginPage from "./pages/LoginPage";
+import FavouriteBooks from "./components/Book/FavouriteBooks";
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
         <Route path="/books/edit" element={<EditBookPage/>}/>
         <Route path="/unregistered-books" element={<UnregisteredBooks/>} />
         <Route path="/unregistered-books/register" element={<RegisterPage/>} />
+        <Route path="/favourites" element={<FavouriteBooks />} />
       </Route>
       <Route path="/login" element={<LoginPage/>}/>
     </Routes>
