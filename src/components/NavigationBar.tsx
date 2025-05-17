@@ -70,7 +70,8 @@ const NavigationBar = () => {
                 </Button>
               )}
               {/* Favourites */}
-              {(role === "client" || role === "worker" || role === "admin") && (
+              {(role === "client") && (
+                <>
                 <Button
                   variant="outlined"
                   color="primary"
@@ -88,6 +89,24 @@ const NavigationBar = () => {
                 >
                   Favourite Books
                 </Button>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  sx={{
+                    mr: 2,
+                    borderColor: "teal",
+                    color: "teal",
+                    "&:hover": {
+                      backgroundColor: "pink",
+                      color: "white",
+                      borderColor: "pink",
+                    },
+                  }}
+                  onClick={() => navigate("/orders")}
+                >
+                  Orders
+                </Button>
+                </>
               )}
               {/* Unregistered Books */}
               {(role === "worker" || role === "admin") && (
