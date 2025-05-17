@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-const RegisterPage = () => {
+const QrRegisterPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
@@ -126,4 +126,4 @@ const RegisterPage = () => {
   return content;
 };
 
-export default RegisterPage;
+export default QrRegisterPage;
