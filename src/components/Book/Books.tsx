@@ -186,6 +186,13 @@ const Books = () => {
               >
                 View
               </Button>
+              <Button
+                variant="contained"
+                color="success"
+                onClick={() => navigate(`/orders/create-order?id=${book.id_Knyga}`)}
+              >
+                Create Order
+              </Button>
               {!favouriteBookIds.includes(book.id_Knyga) && (
                 <Button
                   variant="outlined"
