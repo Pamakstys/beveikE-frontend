@@ -11,11 +11,11 @@ import QrRegisterPage from "./components/QrCode/QrRegisterPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import AddRegisteredBook from './components/QrCode/AddRegisteredBook';
-import FavouriteBooks from "./components/Book/FavouriteBooks";
+import FavouriteBooks from "./components/Book/FavouriteBooks"
 import SurveyPage from "./pages/SurveyPage";
-
-
-
+import Orders from './components/Order/Orders';
+import ReturnBook from './components/QrCode/ReturnBook';
+import CreateOrder from './components/Order/CreateOrder';
 function App() {
 
   return (
@@ -44,6 +44,9 @@ function App() {
         <Route path="/unregistered-books/register" element={<RegisterPage/>} />
         <Route path="/favourites" element={<FavouriteBooks />} />
         <Route path="/survey" element={<SurveyPage />} />
+        <Route path="/orders" element={<Orders />} />
+        <Route path="/orders/return-book" element={<ReturnBook />} />
+        <Route path="/orders/create-order" element={<CreateOrder />} />
       </Route>
       <Route path="/login" element={<LoginPage/>}/>
       <Route path="/register" element={<RegisterPage/>}/>
