@@ -56,9 +56,18 @@ export default function Orders() {
         if (!response.ok) {
           throw new Error(`Error: ${response.statusText}`);
         }
+        
+        
 
-        const data: Order[] = await response.json();
-        setOrders(data);
+        var result = await response.json();
+        console.log("cia ", result);
+        if (Array.isArray(result)) {
+          setOrders(result);
+        } else if (result.message === false) {
+          setOrders([]);
+        }
+        
+
       } catch (err: any) {
         setError(err.message || "Unknown error");
       } finally {
@@ -72,14 +81,20 @@ export default function Orders() {
   if (loading) return <div>Loading orders...</div>;
   if (error) return <div>Error: {error}</div>;
 
-  const būsena14 = orders.filter((o) => o.būsena === 1 || o.būsena === 4);
-  const būsena2 = orders.filter((o) => o.būsena === 2);
-  const būsena3 = orders.filter((o) => o.būsena === 3);
-
+      
+      const būsena14 = orders.filter((o) => o.būsena == 1 || o.būsena == 4);
+      const būsena2 = orders.filter((o) => o.būsena === 2);
+      const būsena3 = orders.filter((o) => o.būsena === 3);
+    
+  
+  
+  
+  
   const renderTable = (
     title: string,
     ordersList: Order[],
     columns: React.ReactNode
+    
   ) => (
     <>
       <Typography variant="h4" gutterBottom sx={{ mt: 4 }}>
@@ -119,6 +134,9 @@ export default function Orders() {
                           color="primary"
                           size="small"
                           sx={{ mr: 1 }}
+                          onClick={() =>
+                            navigate(`/orders/get-order?id=${o.id_Užsakymas}`)
+                          }
                         >
                           View
                         </Button>

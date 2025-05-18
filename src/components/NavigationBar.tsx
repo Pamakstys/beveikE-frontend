@@ -161,9 +161,9 @@ const NavigationBar = () => {
                       borderColor: "pink",
                     },
                   }}
-                  onClick={() => navigate("/admin-panel")}
+                  onClick={() => navigate("/BookBuyRecommendationsPage")}
                 >
-                  Admin Panel
+                  Buy books
                 </Button>
               )}
 

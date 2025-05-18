@@ -15,6 +15,8 @@ import FavouriteBooks from "./components/Book/FavouriteBooks";
 import Orders from './components/Order/Orders';
 import ReturnBook from './components/QrCode/ReturnBook';
 import CreateOrder from './components/Order/CreateOrder';
+import ViewOrderPage from './components/Order/ViewOrderPage';
+import BookBuyRecommendationsPage from './components/Book/BookBuyRecommendationsPage';
 function App() {
 
   return (
@@ -45,9 +47,12 @@ function App() {
         <Route path="/orders" element={<Orders />} />
         <Route path="/orders/return-book" element={<ReturnBook />} />
         <Route path="/orders/create-order" element={<CreateOrder />} />
+        <Route path="/orders/get-order" element={<ViewOrderPage />} />
+        <Route path="/BookBuyRecommendationsPage" element={<BookBuyRecommendationsPage/>} />
       </Route>
       <Route path="/login" element={<LoginPage/>}/>
       <Route path="/register" element={<RegisterPage/>}/>
+      
     </Routes>
       
     </BrowserRouter>
