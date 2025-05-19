@@ -69,6 +69,7 @@ const NavigationBar = () => {
                   Books
                 </Button>
               )}
+
               {/* Susimokėti baudą */}
               <Button
                 variant="outlined"
@@ -87,6 +88,28 @@ const NavigationBar = () => {
               >
                 Pay fine
               </Button>
+
+              {/* Survey */}
+              {(role === "client") && (
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  sx={{
+                    mr: 2,
+                    borderColor: "teal",
+                    color: "teal",
+                    "&:hover": {
+                      backgroundColor: "pink",
+                      color: "white",
+                      borderColor: "pink",
+                    },
+                  }}
+                  onClick={() => navigate("/survey")}
+                >
+                  Participate in the survey
+                </Button>
+              )}
+
               {/* Favourites */}
               {(role === "client") && (
                 <>
