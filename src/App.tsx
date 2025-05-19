@@ -17,6 +17,7 @@ import ReturnBook from './components/QrCode/ReturnBook';
 import CreateOrder from './components/Order/CreateOrder';
 import ViewOrderPage from './components/Order/ViewOrderPage';
 import BookBuyRecommendationsPage from './components/Book/BookBuyRecommendationsPage';
+import ViewFinePage from './components/Order/ViewFinePage';
 function App() {
 
   return (
@@ -49,6 +50,7 @@ function App() {
         <Route path="/orders/create-order" element={<CreateOrder />} />
         <Route path="/orders/get-order" element={<ViewOrderPage />} />
         <Route path="/BookBuyRecommendationsPage" element={<BookBuyRecommendationsPage/>} />
+        <Route path="/fine" element={<ViewFinePage/>} />
       </Route>
       <Route path="/login" element={<LoginPage/>}/>
       <Route path="/register" element={<RegisterPage/>}/>
