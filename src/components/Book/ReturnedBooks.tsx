@@ -69,7 +69,6 @@ export default function ReturnedBooks() {
       if (res.ok) {
         fetchUncheckedBooks();
       }
-
     } catch (err) {
       setMessage("Klaida apdorojant knygą.");
     }
