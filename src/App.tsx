@@ -16,30 +16,40 @@ import Orders from './components/Order/Orders';
 import ReturnBook from './components/QrCode/ReturnBook';
 import CreateOrder from './components/Order/CreateOrder';
 import ReturnedBooks from './components/Book/ReturnedBooks';
+import ViewOrderPage from './components/Order/ViewOrderPage';
+import BookBuyRecommendationsPage from './components/Book/BookBuyRecommendationsPage';
+import ViewFinePage from './components/Order/ViewFinePage';
+function App() {
+
 
 function App() {
   return (
-    <BrowserRouter>    
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/books" element={<Books />} />
-          <Route path="/books/view" element={<ViewBookPage />} />
-          <Route path="/books/edit" element={<EditBookPage />} />
-          <Route path="/unregistered-books" element={<UnregisteredBooks />} />
-          <Route path="/unregistered-books/register" element={<QrRegisterPage />} />
-          <Route path="/add-to-bookcase" element={<AddRegisteredBook />} />
-          <Route path="/favourites" element={<FavouriteBooks />} />
-          <Route path="/survey" element={<SurveyPage />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/orders/return-book" element={<ReturnBook />} />
-          <Route path="/orders/create-order" element={<CreateOrder />} />
-          <Route path="/returned-books" element={<ReturnedBooks />} />
-        </Route>
-
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-      </Routes>
+    <BrowserRouter>        
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<MainPage/>} />
+        <Route path="/books" element={<Books/>}/>
+        <Route path="/books/view" element={<ViewBookPage/>}/>
+        <Route path="/books/edit" element={<EditBookPage/>}/>
+        <Route path="/unregistered-books" element={<UnregisteredBooks/>} />
+        <Route path="/unregistered-books/register" element={<QrRegisterPage/>} />
+        <Route path="/add-to-bookcase" element={<AddRegisteredBook/>} />
+        <Route path="/unregistered-books/register" element={<RegisterPage/>} />
+        <Route path="/favourites" element={<FavouriteBooks />} />
+        <Route path="/survey" element={<SurveyPage />} />
+        <Route path="/orders" element={<Orders />} />
+        <Route path="/orders/return-book" element={<ReturnBook />} />
+        <Route path="/orders/create-order" element={<CreateOrder />} />
+        <Route path="/orders/get-order" element={<ViewOrderPage />} />
+        <Route path="/BookBuyRecommendationsPage" element={<BookBuyRecommendationsPage/>} />
+        <Route path="/fine" element={<ViewFinePage/>} />
+        <Route path="/returned-books" element={<ReturnedBooks />} />
+      </Route>
+      <Route path="/login" element={<LoginPage/>}/>
+      <Route path="/register" element={<RegisterPage/>}/>
+      
+    </Routes>
+      
     </BrowserRouter>
   );
 }
