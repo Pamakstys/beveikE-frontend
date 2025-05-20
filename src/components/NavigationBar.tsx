@@ -70,7 +70,7 @@ const NavigationBar = () => {
                 </Button>
               )}
               {/* Survey */}
-              {(role === "client") && (
+              {role === "client" && (
                 <Button
                   variant="outlined"
                   color="primary"
@@ -90,48 +90,49 @@ const NavigationBar = () => {
                 </Button>
               )}
               {/* Favourites */}
-              {(role === "client") && (
+              {role === "client" && (
                 <>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  sx={{
-                    mr: 2,
-                    borderColor: "teal",
-                    color: "teal",
-                    "&:hover": {
-                      backgroundColor: "pink",
-                      color: "white",
-                      borderColor: "pink",
-                    },
-                  }}
-                  onClick={() => navigate("/favourites")}
-                >
-                  Favourite Books
-                </Button>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  sx={{
-                    mr: 2,
-                    borderColor: "teal",
-                    color: "teal",
-                    "&:hover": {
-                      backgroundColor: "pink",
-                      color: "white",
-                      borderColor: "pink",
-                    },
-                  }}
-                  onClick={() => navigate("/orders")}
-                >
-                  Orders
-                </Button>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    sx={{
+                      mr: 2,
+                      borderColor: "teal",
+                      color: "teal",
+                      "&:hover": {
+                        backgroundColor: "pink",
+                        color: "white",
+                        borderColor: "pink",
+                      },
+                    }}
+                    onClick={() => navigate("/favourites")}
+                  >
+                    Favourite Books
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    sx={{
+                      mr: 2,
+                      borderColor: "teal",
+                      color: "teal",
+                      "&:hover": {
+                        backgroundColor: "pink",
+                        color: "white",
+                        borderColor: "pink",
+                      },
+                    }}
+                    onClick={() => navigate("/orders")}
+                  >
+                    Orders
+                  </Button>
                 </>
               )}
               {/* Unregistered Books */}
               {(role === "worker" || role === "admin") && (
                 <>
-                  <Button style={{ marginRight: "10px" }}
+                  <Button
+                    style={{ marginRight: "10px" }}
                     variant="outlined"
                     color="primary"
                     sx={{
@@ -148,9 +149,29 @@ const NavigationBar = () => {
                     Unregistered Books
                   </Button>
                   <Button
+                    variant="outlined"
+                    color="primary"
+                    sx={{
+                      borderColor: "teal",
+                      color: "teal",
+                      "&:hover": {
+                        backgroundColor: "pink",
+                        color: "white",
+                        borderColor: "pink",
+                      },
+                    }}
+                    onClick={() => navigate("/add-to-bookcase")}
+                  >
+                    Add Book to Bookcase
+                  </Button>
+                </>
+              )}
+              {(role === "worker" || role === "admin") && (
+                <Button
                   variant="outlined"
                   color="primary"
                   sx={{
+                    mr: 2,
                     borderColor: "teal",
                     color: "teal",
                     "&:hover": {
@@ -159,11 +180,10 @@ const NavigationBar = () => {
                       borderColor: "pink",
                     },
                   }}
-                  onClick={() => navigate("/add-to-bookcase")}
+                  onClick={() => navigate("/returned-books")}
                 >
-                  Add Book to Bookcase
+                  Returned Books
                 </Button>
-                </>
               )}
 
               {/* Admin Panel */}
