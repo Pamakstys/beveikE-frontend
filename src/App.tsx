@@ -1,5 +1,4 @@
-
-import './App.css'
+import './App.css';
 import { BrowserRouter, Route, Routes } from "react-router";
 import Layout from './components/container/Layout';
 import MainPage from './pages/MainPage';
@@ -11,30 +10,21 @@ import QrRegisterPage from "./components/QrCode/QrRegisterPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import AddRegisteredBook from './components/QrCode/AddRegisteredBook';
-import FavouriteBooks from "./components/Book/FavouriteBooks"
+import FavouriteBooks from "./components/Book/FavouriteBooks";
 import SurveyPage from "./pages/SurveyPage";
 import Orders from './components/Order/Orders';
 import ReturnBook from './components/QrCode/ReturnBook';
 import CreateOrder from './components/Order/CreateOrder';
+import ReturnedBooks from './components/Book/ReturnedBooks';
 import ViewOrderPage from './components/Order/ViewOrderPage';
 import BookBuyRecommendationsPage from './components/Book/BookBuyRecommendationsPage';
 import ViewFinePage from './components/Order/ViewFinePage';
 function App() {
 
-  return (
-    <BrowserRouter>
-      {/* <Layout>
-        <Routes>
-          <Route path="/" element={<MainPage/>} />
-          <Route path="/books" element={<Books/>}/>
-          <Route path="/books/view" element={<ViewBookPage/>}/>
-          <Route path="/unregistered-books" element={<UnregisteredBooks/>} />
-          <Route path="/unregistered-books/register" element={<RegisterPage/>} />
-        </Routes>
-      </Layout> */}
 
-      {/* Cia yra senas react routing kodas virsuj, dabar yra naudojama Outlet vietoj children */}
-    
+function App() {
+  return (
+    <BrowserRouter>        
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<MainPage/>} />
@@ -53,6 +43,7 @@ function App() {
         <Route path="/orders/get-order" element={<ViewOrderPage />} />
         <Route path="/BookBuyRecommendationsPage" element={<BookBuyRecommendationsPage/>} />
         <Route path="/fine" element={<ViewFinePage/>} />
+        <Route path="/returned-books" element={<ReturnedBooks />} />
       </Route>
       <Route path="/login" element={<LoginPage/>}/>
       <Route path="/register" element={<RegisterPage/>}/>
@@ -60,7 +51,7 @@ function App() {
     </Routes>
       
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -22,6 +22,7 @@ interface Book {
   aukštis: number;
   plotis: number;
   statusas: string;
+   orderId: number; 
 }
 
 const Books = () => {
